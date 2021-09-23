@@ -1,0 +1,34 @@
+$bg-color: #daffe7;
+$title-size: 2rem; 
+
+button {
+    font-family: "Press Start 2P";
+}
+
+body {
+    font-family: "Press Start 2P";
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.main {
+    height: 100vh;
+    background-color: $bg-color;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 550px;
+    height: 100%;
+    justify-content: center;
+}
+
+.title {
+    font-size: $title-size;
+}

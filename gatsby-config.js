@@ -3,5 +3,5 @@ module.exports = {
     siteUrl: "https://www.yourdomain.tld",
     title: "Simple Game With Friend",
   },
-  plugins: ["gatsby-plugin-styled-components"],
+  plugins: ['gatsby-plugin-sass', 'gatsby-plugin-nodejs'],
 };
