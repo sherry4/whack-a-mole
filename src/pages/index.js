@@ -176,6 +176,7 @@ const IndexPage = () => {
         socket_ref.current.on('score-updated', (player_data) => {
             set_showed_mole_number(-1);
             set_player_data(player_data);
+            set_is_disable_click(true);
         });
 
         // stop-clicked
@@ -214,7 +215,6 @@ const IndexPage = () => {
             case 'click_mole':
                 if (!is_disable_click) {
                     socket_ref.current.emit('someone-scores', { player_num, showed_mole_number });
-                    set_is_disable_click(true);
                 } break;
             case 'play_again':
                 handle_play_again();
@@ -231,51 +231,53 @@ const IndexPage = () => {
 
     return (
         <div className="main">
-            <div className="container">
-                <span className="title">Simple Game With Friend</span>
-                <Board>
-                    {fake.map((i, idx) => (
-                        <Mole
-                            key={idx}
-                            index={idx}
-                            onClick={(index) => onClick('click_mole', index)}
-                            showed_mole_number={showed_mole_number}
-                        />
-                    ))}
-                </Board>
-                <Countdown remaining={remaining} />
-                <ActionZone>
-                    {buttons.map((b, idx) => (
-                        <ActionButton
-                            key={idx}
-                            play_label={b.play_label}
-                            join_label={b.join_label}
-                            stop_label={b.stop_label}
-                            onClick={onClick}
+            <div className="left-container">
+                <div className="game-container">
+                    <span className="title">Whack a Mole</span>
+                    <Board>
+                        {fake.map((i, idx) => (
+                            <Mole
+                                key={idx}
+                                index={idx}
+                                onClick={(index) => onClick('click_mole', index)}
+                                showed_mole_number={showed_mole_number}
+                            />
+                        ))}
+                    </Board>
+                    <Countdown remaining={remaining} />
+                    <ActionZone>
+                        {buttons.map((b, idx) => (
+                            <ActionButton
+                                key={idx}
+                                play_label={b.play_label}
+                                join_label={b.join_label}
+                                stop_label={b.stop_label}
+                                onClick={onClick}
+                                is_joined={is_joined}
+                                is_playing={is_playing}
+                            />
+                        ))}
+                    </ActionZone>
+                    {show_dialog_name
+                        && <DialogInputName
                             is_joined={is_joined}
-                            is_playing={is_playing}
+                            is_waiting={is_waiting}
+                            onClick={onClick}
                         />
-                    ))}
-                </ActionZone>
-                {show_dialog_name
-                    && <DialogInputName
-                        is_joined={is_joined}
-                        is_waiting={is_waiting}
-                        onClick={onClick}
-                    />
-                }
-                {show_dialog_result
-                    && <DialogResult
-                        result={result}
-                        onClick={onClick}
-                    />
-                }
+                    }
+                    {show_dialog_result
+                        && <DialogResult
+                            result={result}
+                            onClick={onClick}
+                        />
+                    }
+                </div>
             </div>
-            {is_show_scoreboard
-                && <Scoreboard
+            <div className="right-container">
+                <Scoreboard
                     player_data={player_data}
                 />
-            }
+            </div>
         </div>
     )
 };
